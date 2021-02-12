@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Sql_DataLayer
 {
-    public static class SQL_DataAccess
+    public static class SqlDataAccess
     {
         public static object ExecuteScalar(string sqlQuery, string connectionString)
         {

@@ -35,61 +35,61 @@ namespace DataLayer_Test
             Guid userId1 = new Guid("e5c24e7a-a819-1e62-e37c-0700402a1b8c");
 
             //sql Parameter tests
-            SqlParameter[] userToSqlParameters = SQL_DataAccess.CreateSQLParameterList(user).ToArray();
-            SqlParameter[] userID1 = { SQL_DataAccess.CreateSQLParameter("UserID", new Guid("bc16cb00-4c2d-493b-bc43-a2acb3654081")) };
-            SqlParameter[] userID2 = { SQL_DataAccess.CreateSQLParameter("UserID", new Guid("e5c24e7a-a819-1e62-e37c-0700402a1b23")) };
-            SqlParameter[] UserID3 = { SQL_DataAccess.CreateSQLParameter("UserID", new Guid("e5c24e7a-a819-2e62-e37c-0700402a1b23")) };
+            SqlParameter[] userToSqlParameters = SqlDataAccess.CreateSQLParameterList(user).ToArray();
+            SqlParameter[] userID1 = { SqlDataAccess.CreateSQLParameter("UserID", new Guid("bc16cb00-4c2d-493b-bc43-a2acb3654081")) };
+            SqlParameter[] userID2 = { SqlDataAccess.CreateSQLParameter("UserID", new Guid("e5c24e7a-a819-1e62-e37c-0700402a1b23")) };
+            SqlParameter[] UserID3 = { SqlDataAccess.CreateSQLParameter("UserID", new Guid("e5c24e7a-a819-2e62-e37c-0700402a1b23")) };
 
             // Testing Procedure SQL
             Console.WriteLine("Print all users \n");
-            List<User> users = SQL_DataAccess.ReadWithProcedure<User>("[Users_ReadAll]", conectionString);
+            List<User> users = SqlDataAccess.ReadWithProcedure<User>("[Users_ReadAll]", conectionString);
             Display<User>(users);
 
             Console.WriteLine("Inser User \n");
-            int nrOfUsers = (int)SQL_DataAccess.ExecuteScalar("SELECT Count(*) FROM [Users] ", conectionString);
+            int nrOfUsers = (int)SqlDataAccess.ExecuteScalar("SELECT Count(*) FROM [Users] ", conectionString);
             Console.WriteLine("\n number of Users before insert is {0} \n", nrOfUsers);
-            SQL_DataAccess.ExecuteNonQueryWithProcedure("dbo.Users_DeleteByID", conectionString, userID2);
-            SQL_DataAccess.ExecuteNonQueryWithProcedure("dbo.Users_Insert", conectionString, userToSqlParameters);
+            SqlDataAccess.ExecuteNonQueryWithProcedure("dbo.Users_DeleteByID", conectionString, userID2);
+            SqlDataAccess.ExecuteNonQueryWithProcedure("dbo.Users_Insert", conectionString, userToSqlParameters);
 
             //Testing scalar operations
-            int nrOfUsers1 = (int)SQL_DataAccess.ExecuteScalar("SELECT Count(*) FROM [Users] ", conectionString);
+            int nrOfUsers1 = (int)SqlDataAccess.ExecuteScalar("SELECT Count(*) FROM [Users] ", conectionString);
             Console.WriteLine("\n number of Users after insert is {0} \n", nrOfUsers1);
 
-            SQL_DataAccess.ExecuteNonQueryWithProcedure("dbo.Users_DeleteByID", conectionString, userID1);
-            int nrOfUsers2 = (int)SQL_DataAccess.ExecuteScalar("SELECT Count(*) FROM [Users] ", conectionString);
+            SqlDataAccess.ExecuteNonQueryWithProcedure("dbo.Users_DeleteByID", conectionString, userID1);
+            int nrOfUsers2 = (int)SqlDataAccess.ExecuteScalar("SELECT Count(*) FROM [Users] ", conectionString);
             Console.WriteLine("\n number of Users after delete is {0} \n", nrOfUsers2);
 
             //Testing Query SQL
-            List<User> user2 = SQL_DataAccess.Read<User>(string.Format("Select * from [Users] where [UserID] = {0}", SqlValueConverter.ToSqlValue(userId1)), conectionString);
+            List<User> user2 = SqlDataAccess.Read<User>(string.Format("Select * from [Users] where [UserID] = {0}", SqlValueConverter.ToSqlValue(userId1)), conectionString);
             Console.WriteLine("User from query is \n");
             Display<User>(user2);
 
-            SQL_DataAccess.ExecuteNonQuery("INSERT INTO [Users]([UserID],[Email],[UserName],[Password],[PhoneNumber],[CreationDate],[Subscribed])"
+            SqlDataAccess.ExecuteNonQuery("INSERT INTO [Users]([UserID],[Email],[UserName],[Password],[PhoneNumber],[CreationDate],[Subscribed])"
                 + " VALUES('bc16cb00-4c2d-493b-bc43-a2acb3654081', 'manu_lacu@yahoo.ro', 'new', 'new', '0765767186', '2016-02-06 10:19', '1')", conectionString);
 
-            int nrOfUsers3 = (int)SQL_DataAccess.ExecuteScalar("SELECT Count(*) FROM [Users] ", conectionString);
+            int nrOfUsers3 = (int)SqlDataAccess.ExecuteScalar("SELECT Count(*) FROM [Users] ", conectionString);
             Console.WriteLine("\n number of Users after insert is {0} \n", nrOfUsers3);
 
             //insert and update 
-            SQL_DataAccess.ExecuteNonQueryWithProcedure("dbo.Users_DeleteByID", conectionString, UserID3);
-            SQL_DataAccess.Insert(user3, "Users", conectionString);
+            SqlDataAccess.ExecuteNonQueryWithProcedure("dbo.Users_DeleteByID", conectionString, UserID3);
+            SqlDataAccess.Insert(user3, "Users", conectionString);
 
-            int nrOfUsers4 = (int)SQL_DataAccess.ExecuteScalar("SELECT Count(*) FROM [Users] ", conectionString);
+            int nrOfUsers4 = (int)SqlDataAccess.ExecuteScalar("SELECT Count(*) FROM [Users] ", conectionString);
             Console.WriteLine("\n number of Users after insert and delete is {0} \n", nrOfUsers4);
 
-            List<User> firstInsertUser3 = SQL_DataAccess.Read<User>(string.Format("Select * from [Users] {0}", SQL_DataAccess.CreateWhereClause("UserID", SqlValueConverter.ToSqlValue(user3.UserID))), conectionString);
+            List<User> firstInsertUser3 = SqlDataAccess.Read<User>(string.Format("Select * from [Users] {0}", SqlDataAccess.CreateWhereClause("UserID", SqlValueConverter.ToSqlValue(user3.UserID))), conectionString);
             
             Console.WriteLine("User from insert is \n");
             Display<User>(firstInsertUser3);
 
-            SQL_DataAccess.Update(user3, "Users", SQL_DataAccess.CreateWhereClause("UserID", SqlValueConverter.ToSqlValue(user3.UserID)), conectionString);
+            SqlDataAccess.Update(user3, "Users", SqlDataAccess.CreateWhereClause("UserID", SqlValueConverter.ToSqlValue(user3.UserID)), conectionString);
 
-            List<User> user3AfterUpdate = SQL_DataAccess.Read<User>(string.Format("Select * from [Users] {0}", SQL_DataAccess.CreateWhereClause("UserID", SqlValueConverter.ToSqlValue(user3.UserID))), conectionString);
+            List<User> user3AfterUpdate = SqlDataAccess.Read<User>(string.Format("Select * from [Users] {0}", SqlDataAccess.CreateWhereClause("UserID", SqlValueConverter.ToSqlValue(user3.UserID))), conectionString);
 
             Console.WriteLine("User from update is \n");
             Display<User>(user3AfterUpdate);
 
-            List<User> users2 = SQL_DataAccess.ReadWithProcedure<User>("[Users_ReadAll]", conectionString);
+            List<User> users2 = SqlDataAccess.ReadWithProcedure<User>("[Users_ReadAll]", conectionString);
 
             Console.WriteLine("User final is \n");
             Display<User>(users2);
