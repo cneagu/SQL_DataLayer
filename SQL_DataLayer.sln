@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer_Test", "SQL_DataLayer\DataLayer_Test.csproj", "{C69EC369-8980-447D-9104-671F4C73262E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sql_DataLayer", "Sql_DataLayer_Driver\Sql_DataLayer.csproj", "{B691D924-9589-4741-8B2C-31E7E0D480F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{45C64C00-553F-4447-BEEC-06A37730EF21}"
+	ProjectSection(SolutionItems) = preProject
+		Database\SQL_CreateDB.sql = Database\SQL_CreateDB.sql
+		Database\SQL_TestData.txt = Database\SQL_TestData.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C69EC369-8980-447D-9104-671F4C73262E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C69EC369-8980-447D-9104-671F4C73262E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C69EC369-8980-447D-9104-671F4C73262E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C69EC369-8980-447D-9104-671F4C73262E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B691D924-9589-4741-8B2C-31E7E0D480F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B691D924-9589-4741-8B2C-31E7E0D480F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B691D924-9589-4741-8B2C-31E7E0D480F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B691D924-9589-4741-8B2C-31E7E0D480F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BDFDDB6B-44EA-4B71-A637-14454F36455F}
+	EndGlobalSection
+EndGlobal
